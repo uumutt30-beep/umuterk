@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urun Detayi</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #101a3d;
+      --panel-2: #121f49;
+      --line: #2c3f7d;
+      --text: #eef2ff;
+      --muted: #b6c1e8;
+      --brand: #00c2ff;
+      --brand-2: #6a7cff;
+      --ok: #35d59c;
+      --danger: #ff6b97;
+      --radius: 14px;
+      --shadow: 0 14px 34px rgba(0, 0, 0, .35);
+      --ratio: 1110 / 750;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: radial-gradient(circle at 30% -10%, #24357f 0%, var(--bg) 42%), var(--bg);
+      color: var(--text);
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1320px, calc(100% - 32px)); margin-inline: auto; }
+    .top { border-bottom: 1px solid #25386f; background: rgba(11, 17, 41, .86); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 20; }
+    .top .container { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .brand { font-weight: 900; letter-spacing: .3px; }
+    .btn {
+      border: 1px solid transparent;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color: #031433;
+      font-weight: 800;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .btn-ghost { background: transparent; border-color: var(--line); color: var(--text); }
+    .breadcrumb { padding: 14px 0 8px; color: #aebce9; font-size: 13px; }
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 16px;
+      align-items: start;
+      padding-bottom: 18px;
+    }
+    .media-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0f1838;
+      aspect-ratio: var(--ratio);
+      position: relative;
+    }
+    .media-box img { width: 100%; height: 100%; object-fit: cover; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, var(--panel-2), var(--panel));
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+    .rating { color: #ffd979; font-size: 13px; margin-bottom: 8px; }
+    .stock { color: var(--ok); font-size: 13px; font-weight: 700; }
+    .price-row { display: flex; align-items: end; gap: 10px; margin: 8px 0 10px; }
+    .price { font-size: 30px; font-weight: 900; }
+    .old { text-decoration: line-through; color: #9bb0ec; font-size: 14px; }
+    .discount {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #ff99b6;
+      color: #ffdce7;
+      background: linear-gradient(90deg, rgba(255, 74, 122, .3), rgba(255, 112, 76, .24));
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .qty button { width: 34px; height: 34px; border: 0; background: #18285e; color: #fff; cursor: pointer; }
+    .qty span { width: 34px; text-align: center; }
+    .actions { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .accordion { margin-top: 14px; display: grid; gap: 8px; }
+    .acc-item { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #0f1838; }
+    .acc-btn { width: 100%; text-align: left; border: 0; background: #111d43; color: #e8eeff; padding: 12px; cursor: pointer; font-weight: 700; }
+    .acc-body { padding: 12px; color: var(--muted); font-size: 14px; display: none; }
+    .acc-item.open .acc-body { display: block; }
+    .related { padding: 12px 0 30px; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .card { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #101a3d; cursor: pointer; }
+    .thumb { aspect-ratio: var(--ratio); background: #0e1633; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .body { padding: 10px; display: grid; gap: 6px; }
+    .title { font-size: 14px; min-height: 34px; margin: 0; }
+    .sub { font-size: 12px; color: var(--muted); }
+    .row { display: flex; align-items: baseline; gap: 8px; }
+    .p { font-weight: 900; }
+    .o { text-decoration: line-through; color: #9bb0ec; font-size: 12px; }
+    @media (max-width: 980px) {
+      .product-layout { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .cards { grid-template-columns: 1fr; }
+      .actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="container">
+      <a class="brand" href="index.html">UMUTERK</a>
+      <a class="btn btn-ghost" href="index.html">Magazaya Don</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb">Ana Sayfa > Katalog > <span id="bcTitle">Urun</span></div>
+    <section class="product-layout">
+      <article class="media-box">
+        <img id="pImg" src="assets/products/p01.png" alt="Urun">
+      </article>
+      <aside class="panel">
+        <h1 id="pTitle" style="margin:0 0 8px;font-size:30px;">Urun</h1>
+        <div class="rating">★★★★★ 5.0/5.0 (99 yorum)</div>
+        <div class="stock">Stokta: Cok sayida</div>
+        <div class="price-row">
+          <span class="price" id="pPrice">₺0</span>
+          <span class="old" id="pOld">₺0</span>
+          <span class="discount" id="pDisc">%0 INDIRIM</span>
+        </div>
+        <p id="pSub" style="margin:0 0 10px;color:#bfd0ff;">Kategori alt bilgisi</p>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="qty"><button id="qMinus">-</button><span id="qVal">1</span><button id="qPlus">+</button></div>
+          <small style="color:#9eb0e8;">Vergi dahildir</small>
+        </div>
+        <div class="actions">
+          <button class="btn" id="addCart">Sepete Ekle</button>
+          <button class="btn btn-ghost" id="buyNow">WhatsApp ile Satin Al</button>
+        </div>
+        <div class="accordion">
+          <div class="acc-item open">
+            <button class="acc-btn">Urun Aciklamasi</button>
+            <div class="acc-body">Bu alan referans tasarimdaki aciklama bloklarina benzer sekilde olusturulmustur.</div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-btn">Teslimat Talimatlari</button>
+            <div class="acc-body">Siparis sonrasi WhatsApp uzerinden iletisime gecilerek hizli islem yapilir.</div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-btn">Sure ve Yontem</button>
+            <div class="acc-body">Teslimat suresi urune gore degisir; surece dair bilgilendirme mesajla verilir.</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="related">
+      <h2 style="margin:0 0 10px;">Bunlari da begenebilirsin</h2>
+      <div class="cards" id="relatedCards"></div>
+    </section>
+  </main>
+
+  <script>
+    const whatsappNumber = '905459555848';
+    const products = [
+      { id: 1, title: 'Deneme Urun 01', subtitle: 'Hizli teslim • Coin', price: 137, oldPrice: 199, tags: ['coin'], img: 'assets/products/p01.png' },
+      { id: 2, title: 'Deneme Urun 02', subtitle: 'Ozel firsat • Cash', price: 284, oldPrice: 349, tags: ['cash'], img: 'assets/products/p02.png' },
+      { id: 3, title: 'Deneme Urun 03', subtitle: 'Nadir seri • Skin', price: 419, oldPrice: 479, tags: ['skin'], img: 'assets/products/p03.png' },
+      { id: 4, title: 'Deneme Urun 04', subtitle: 'Ekstra bonus • Coin', price: 96, oldPrice: 139, tags: ['coin'], img: 'assets/products/p04.png' },
+      { id: 5, title: 'Deneme Urun 05', subtitle: 'Sezonluk avantaj • Cash', price: 532, oldPrice: 619, tags: ['cash'], img: 'assets/products/p05.png' },
+      { id: 6, title: 'Deneme Urun 06', subtitle: 'Koleksiyon • Skin', price: 268, oldPrice: 329, tags: ['skin'], img: 'assets/products/p06.png' },
+      { id: 7, title: 'Deneme Urun 07', subtitle: 'Ekonomik seri • Coin', price: 73, oldPrice: 109, tags: ['coin'], img: 'assets/products/p07.png' },
+      { id: 8, title: 'Deneme Urun 08', subtitle: 'VIP paket • Cash', price: 746, oldPrice: 829, tags: ['cash'], img: 'assets/products/p08.png' },
+      { id: 9, title: 'Deneme Urun 09', subtitle: 'Tema surumu • Skin', price: 223, oldPrice: 269, tags: ['skin'], img: 'assets/products/p09.png' },
+      { id: 10, title: 'Deneme Urun 10', subtitle: 'Turnuva destegi • Coin', price: 188, oldPrice: 239, tags: ['coin'], img: 'assets/products/p10.png' },
+      { id: 11, title: 'Deneme Urun 11', subtitle: 'Guclu baslangic • Cash', price: 357, oldPrice: 409, tags: ['cash'], img: 'assets/products/p11.png' },
+      { id: 12, title: 'Deneme Urun 12', subtitle: 'Ozel renk • Skin', price: 297, oldPrice: 359, tags: ['skin'], img: 'assets/products/p12.png' }
+    ];
+    const currency = (v) => '₺' + Number(v).toLocaleString('tr-TR');
+    const query = new URLSearchParams(location.search);
+    const id = Number(query.get('id')) || 1;
+    const product = products.find(p => p.id === id) || products[0];
+    let qty = 1;
+
+    const pImg = document.getElementById('pImg');
+    const pTitle = document.getElementById('pTitle');
+    const pSub = document.getElementById('pSub');
+    const pPrice = document.getElementById('pPrice');
+    const pOld = document.getElementById('pOld');
+    const pDisc = document.getElementById('pDisc');
+    const bcTitle = document.getElementById('bcTitle');
+    const qVal = document.getElementById('qVal');
+
+    function paintProduct() {
+      const discount = Math.round((1 - product.price / product.oldPrice) * 100);
+      pImg.src = product.img;
+      pImg.alt = product.title;
+      pTitle.textContent = product.title;
+      pSub.textContent = product.subtitle;
+      pPrice.textContent = currency(product.price);
+      pOld.textContent = currency(product.oldPrice);
+      pDisc.textContent = `%${discount} INDIRIM`;
+      bcTitle.textContent = product.title;
+      document.title = product.title + ' | UMUTERK';
+    }
+
+    function waText() {
+      const msg = [
+        'Merhaba, bu urunu satin almak istiyorum:',
+        product.title,
+        'Adet: ' + qty,
+        'Fiyat: ' + currency(product.price)
+      ].join('\n');
+      return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function renderRelated() {
+      const list = products.filter(p => p.id !== product.id).slice(0, 8);
+      document.getElementById('relatedCards').innerHTML = list.map(p => `
+        <article class="card" data-id="${p.id}">
+          <div class="thumb"><img src="${p.img}" alt="${p.title}"></div>
+          <div class="body">
+            <h3 class="title">${p.title}</h3>
+            <div class="sub">${p.subtitle}</div>
+            <div class="row"><span class="p">${currency(p.price)}</span><span class="o">${currency(p.oldPrice)}</span></div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    paintProduct();
+    renderRelated();
+
+    document.getElementById('qPlus').addEventListener('click', () => { qty++; qVal.textContent = qty; });
+    document.getElementById('qMinus').addEventListener('click', () => { qty = Math.max(1, qty - 1); qVal.textContent = qty; });
+    document.getElementById('buyNow').addEventListener('click', () => window.open(waText(), '_blank', 'noopener,noreferrer'));
+    document.getElementById('addCart').addEventListener('click', () => window.open(waText(), '_blank', 'noopener,noreferrer'));
+
+    document.querySelectorAll('.acc-btn').forEach(btn => {
+      btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+    });
+    document.body.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if (!card) return;
+      location.href = `product.html?id=${Number(card.dataset.id)}`;
+    });
+  </script>
+</body>
+</html>
