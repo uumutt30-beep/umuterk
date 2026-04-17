@@ -317,49 +317,20 @@
       gap: 8px;
       padding: 0;
     }
-  .cat-pill .bubble {
-  width: 100%;
-  max-width: 138px;
-  aspect-ratio: 1 / 1;
-  border-radius: 999px;
-  border: 1px solid #5c53a8;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(171, 138, 255, .35), rgba(82, 66, 156, .22) 40%, rgba(42, 35, 91, .34) 72%),
-    linear-gradient(180deg, #3d2f83, #2a2360);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 8px 18px rgba(0, 0, 0, .28);
-  transition: transform var(--tr-fast), border-color var(--tr-fast), box-shadow var(--tr-fast);
-  position: relative;
-  overflow: hidden;
-}
-
-.cat-pill .bubble img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.cat-pill .bubble img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-}
-    }
-    .cat-pill .bubble::before {
-      content: "";
-      width: 56%;
+    .cat-pill .bubble {
+      width: 100%;
+      max-width: 138px;
       aspect-ratio: 1 / 1;
       border-radius: 999px;
-      border: 2px dashed rgba(240, 229, 255, .62);
-      opacity: .7;
+      border: 1px solid #5c53a8;
+      background: url('assets/12345.png') center/cover no-repeat, linear-gradient(180deg, #3d2f83, #2a2360);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 8px 18px rgba(0, 0, 0, .28);
+      transition: transform var(--tr-fast), border-color var(--tr-fast), box-shadow var(--tr-fast);
+    }
+    .cat-pill .bubble::before {
+      content: none;
     }
     .cat-pill span {
       font-size: 17px;
@@ -1355,8 +1326,7 @@
   <section class="header-cats">
     <div class="container header-cats-row">
       <button class="cat-pill is-current" data-category-nav="coin" data-route="category">
-<img src="bg.png" alt="icon" class="cat-icon"> </span>
-<span class="bubble"><img src="bg.png"></span>
+        <span class="bubble"></span>
         <span>Madeni paralar</span>
       </button>
       <button class="cat-pill" data-category-nav="cash" data-route="category">
@@ -1395,27 +1365,16 @@
       <div class="hero">
         <div class="container hero-grid">
           <article class="hero-main" data-animate>
-            <img src="bg.png" alt="Hero placeholder">
+            <img src="assets/deneme.jpg" alt="Umuterk giris gorseli">
             <div class="hero-overlay">
-              <span class="flash-badge">HOT: BUGUNE OZEL INDIRIM • SINIRLI STOK</span>
-              <span class="chip">SEZON İNDİRİMİ</span>
-              <h1>8 Ball Pool Mağazası Placeholder Dünyasına Hoş Geldin</h1>
-              <p>Bu bölüm geçici metinlerle doldurulmuştur. Tüm içerikler daha sonra gerçek kampanya, başlık ve ürün metinleriyle değiştirilecektir.</p>
+              <span class="chip">UMUTERK'E HOS GELDIN</span>
+              <h1>Umuterk ile guvenli, hizli ve premium oyun alisveris deneyimi</h1>
+              <p>Bu alan ana giris bolumudur. Buraya gonderecegin gorsel yerlestirilecek. Umuterk olarak amacim; hizli iletisim, duzenli destek ve net fiyatlarla kullanicilara sorunsuz bir deneyim sunmaktir.</p>
               <div>
-                <button class="btn" data-route="category">Şimdi İncele</button>
+                <button class="btn" data-route="category">Urunleri Incele</button>
               </div>
             </div>
           </article>
-          <aside class="hero-side">
-            <article class="promo-card" data-animate>
-              <img src="assets/deneme.png" alt="Promo 1">
-              <div class="promo-text">Anlık Teslimat Placeholder Metni ve Güvenli Alışveriş</div>
-            </article>
-            <article class="promo-card" data-animate>
-              <img src="assets/deneme.jpg" alt="Promo 2">
-              <div class="promo-text">Haftalık Özel Paketler ve Yüksek İndirimli Fırsatlar</div>
-            </article>
-          </aside>
         </div>
       </div>
 
