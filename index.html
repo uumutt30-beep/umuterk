@@ -329,6 +329,9 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 8px 18px rgba(0, 0, 0, .28);
       transition: transform var(--tr-fast), border-color var(--tr-fast), box-shadow var(--tr-fast);
     }
+    .cat-pill:first-child .bubble {
+      background: url('assets/örnek1.png') center/cover no-repeat, linear-gradient(180deg, #3d2f83, #2a2360);
+    }
     .cat-pill .bubble::before {
       content: none;
     }
@@ -387,35 +390,129 @@
     .hero-main {
       min-height: 0;
       aspect-ratio: var(--media-ratio);
-      border-radius: 18px;
+      border-radius: 24px;
       overflow: hidden;
       position: relative;
-      border: 1px solid #2a3b72;
-      background: #101a3d;
+      border: 1px solid rgba(90, 118, 255, .35);
+      background: linear-gradient(135deg, #0d1633 0%, #1a237e 50%, #0d1633 100%);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, .5),
+        0 0 0 1px rgba(90, 118, 255, .2),
+        inset 0 1px 0 rgba(255, 255, 255, .1);
     }
-    .hero-main img { width: 100%; height: 100%; object-fit: cover; opacity: .84; }
+    .hero-main img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      opacity: .9;
+      transition: transform .6s var(--easing);
+    }
+    .hero-main:hover img {
+      transform: scale(1.03);
+    }
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(11, 16, 32, .4) 50%,
+        rgba(11, 16, 32, .85) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
     .hero-main::after {
       content: "";
       position: absolute;
       inset: -20% auto -20% -30%;
       width: 42%;
       transform: skewX(-18deg) translateX(-130%);
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.20), transparent);
-      animation: heroSweep 5.8s ease-in-out infinite;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+      animation: heroSweep 6s ease-in-out infinite;
       pointer-events: none;
+      z-index: 2;
     }
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(110deg, rgba(4,9,21,.82), rgba(4,9,21,.25));
-      padding: 26px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
       justify-content: end;
-      gap: 10px;
+      gap: 16px;
+      z-index: 3;
     }
-    .hero-overlay h1 { margin: 0; font-size: clamp(24px, 3vw, 38px); line-height: 1.08; }
-    .hero-overlay p { margin: 0; color: #d5defd; max-width: 58ch; }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, .08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: #a5b4fc;
+    }
+    .hero-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, #00c2ff, #6a7cff);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00c2ff;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    .hero-overlay h1 { 
+      margin: 0; 
+      font-size: clamp(32px, 5vw, 56px); 
+      line-height: 1.1;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 20px rgba(90, 118, 255, .3);
+    }
+    .hero-overlay p { 
+      margin: 0; 
+      color: #c7d2fe; 
+      max-width: 600px;
+      font-size: clamp(14px, 1.5vw, 17px);
+      line-height: 1.6;
+      opacity: .9;
+    }
+    .hero-btn {
+      width: fit-content;
+      margin-top: 8px;
+      padding: 14px 28px !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      border-radius: 12px !important;
+      background: linear-gradient(135deg, #00c2ff 0%, #6a7cff 100%) !important;
+      border: none !important;
+      color: #0a0e27 !important;
+      box-shadow: 
+        0 10px 30px -5px rgba(0, 194, 255, .4),
+        0 0 0 1px rgba(255, 255, 255, .1) inset !important;
+      transition: all .3s var(--easing) !important;
+    }
+    .hero-btn:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 
+        0 15px 40px -5px rgba(0, 194, 255, .5),
+        0 0 0 1px rgba(255, 255, 255, .15) inset !important;
+      filter: brightness(1.1) !important;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .6; transform: scale(.8); }
+    }
 
     .section { padding: 22px 0; }
     .section-head {
@@ -1367,11 +1464,11 @@
           <article class="hero-main" data-animate>
             <img src="assets/deneme.jpg" alt="Umuterk giris gorseli">
             <div class="hero-overlay">
-              <span class="chip">UMUTERK'E HOS GELDIN</span>
-              <h1>Umuterk ile guvenli, hizli ve premium oyun alisveris deneyimi</h1>
-              <p>Bu alan ana giris bolumudur. Buraya gonderecegin gorsel yerlestirilecek. Umuterk olarak amacim; hizli iletisim, duzenli destek ve net fiyatlarla kullanicilara sorunsuz bir deneyim sunmaktir.</p>
+              <span class="hero-chip">UMUTERK'e Hos Geldin</span>
+              <h1>Umuterk ile Guvenli, Hizli ve Premium Oyun Alisveris Deneyimi</h1>
+              <p>Bu alan ana giris bolumudur. Buraya gonderecegin gorsel yerlestirilecek. Umuterk olarak amacimiz; hizli iletisim, duzenli destek ve net fiyatlarla kullanicilara sorunsuz bir deneyim sunmaktir.</p>
               <div>
-                <button class="btn" data-route="category">Urunleri Incele</button>
+                <button class="btn hero-btn" data-route="category">Urunleri Incele</button>
               </div>
             </div>
           </article>
